@@ -1,39 +1,37 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify"; //refer docs
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import Header from "./component/nav/Header";
-import Home from "./pages/Home";
-
-import UserRoute from "../src/component/routes/UserRoute";
-import AdminRoute from "../src/component/routes/AdminRoute";
 
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Home from "./pages/Home";
+import Header from "./component/nav/Header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import History from "./pages/user/History";
+import UserRoute from "./component/routes/UserRoute";
+import AdminRoute from "./component/routes/AdminRoute";
 import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import CategoryCreate from "./pages/admin/category/CategoryCreate";
+import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
-import { currentUser } from "../src/functions/auth";
-
-// import firebase from "firebase/app";
-// import "firebase/auth";
+import { currentUser } from "./functions/auth";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  // to check firebase auth
+  // to check firebase auth state
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-        console.log(user);
+        console.log("user", user);
+
         currentUser(idTokenResult.token)
           .then((res) => {
             dispatch({
@@ -47,13 +45,10 @@ const App = () => {
               },
             });
           })
-          .catch((error) => {
-            //
-            console.log(error);
-          });
+          .catch((err) => console.log(err));
       }
     });
-    //cleanup
+    // cleanup
     return () => unsubscribe();
   }, [dispatch]);
 
@@ -71,6 +66,12 @@ const App = () => {
         <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+        <AdminRoute exact path="/admin/category" component={CategoryCreate} />
+        <AdminRoute
+          exact
+          path="/admin/category/:slug"
+          component={CategoryUpdate}
+        />
       </Switch>
     </>
   );
