@@ -63,18 +63,25 @@ const SubUpdate = ({ match, history }) => {
 
           <div className="form-group">
             <label>Parent category</label>
-            <select
-              name="category"
-              className="form-control"
-              onChange={(e) => setParent(e.target.value)}
-            >
-              {categories.length > 0 &&
-                categories.map((c) => (
-                  <option key={c._id} value={c._id} selected={c._id === parent}>
-                    {c.name}
-                  </option>
-                ))}
-            </select>
+            {
+              <select
+                name="category"
+                className="form-control"
+                onChange={(e) => setParent(e.target.value)}
+                defaultValue={categories._id == parent}
+              >
+                {categories.length > 0 &&
+                  categories.map((c) => (
+                    <option
+                      key={c._id}
+                      value={c._id}
+                      selected={c._id === parent}
+                    >
+                      {c.name}
+                    </option>
+                  ))}
+              </select>
+            }
           </div>
 
           <CategoryForm
