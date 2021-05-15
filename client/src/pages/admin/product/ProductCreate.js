@@ -4,7 +4,11 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../component/forms/ProductCreateForm";
+import FileUpload from "../../../component/forms/FileUpload";
+
 import { getCategories, getCategorySubs } from "../../../functions/category";
+
+import { LoadingOutlined } from "@ant-design/icons";
 
 const initialState = {
   title: "Macbook Pro",
@@ -26,6 +30,7 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // redux
   const { user } = useSelector((state) => ({ ...state }));
@@ -76,10 +81,22 @@ const ProductCreate = () => {
         </div>
 
         <div className="col-md-10">
-          <h4>Product create</h4>
+          {loading ? (
+            <LoadingOutlined className="text-danger h1" />
+          ) : (
+            <h4>Product create</h4>
+          )}
           <hr />
 
-          {/**JSON.stringify(values.subs )*/}
+          {/*JSON.stringify(values.images)*/}
+
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
 
           <ProductCreateForm
             handleSubmit={handleSubmit}
