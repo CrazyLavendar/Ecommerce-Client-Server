@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import AdminNav from "../../../component/nav/AdminNav";
+import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { getProductsByCount } from "../../../functions/product";
-import AdminProductCard from "../../../component/cards/AdminProductCard";
+import AdminProductCard from "../../../components/cards/AdminProductCard";
 import { useSelector } from "react-redux";
 import { removeProduct } from "../../../functions/product";
 

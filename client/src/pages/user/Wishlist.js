@@ -1,5 +1,5 @@
 import React from "react";
-import UserNav from "../../component/nav/UserNav";
+import UserNav from "../../components/nav/UserNav";
 const WishList = () => {
   return (
     <div className="container-fluid">

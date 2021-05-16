@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import AdminNav from "../../../component/nav/AdminNav";
+import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { createProduct, updateProduct } from "../../../functions/product";
-import ProductCreateForm from "../../../component/forms/ProductCreateForm";
-import FileUpload from "../../../component/forms/FileUpload";
+import ProductCreateForm from "../../../components/forms/ProductCreateForm";
+import FileUpload from "../../../components/forms/FileUpload";
 
 import { getCategories, getCategorySubs } from "../../../functions/category";
 

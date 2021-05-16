@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AdminNav from "../../../component/nav/AdminNav";
+import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import {
@@ -9,8 +9,8 @@ import {
 } from "../../../functions/category";
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import CategoryForm from "../../../component/forms/CategoryForm";
-import LocalSearch from "../../../component/forms/LocalSearch";
+import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 const CategoryCreate = () => {
   const { user } = useSelector((state) => ({ ...state })); // get value anywhere from useSelector
