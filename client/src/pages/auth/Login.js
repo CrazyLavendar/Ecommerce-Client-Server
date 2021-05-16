@@ -1,42 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { auth, googleAuthProvider } from "../../firebase";
-import { toast } from "react-toastify"; //refer docs
+import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOrUpdateUser } from "../../functions/auth"; // Perform get request to server
+import { createOrUpdateUser } from "../../functions/auth";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("crazylavendar@gmail.com");
   const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false);
 
-  const { user } = useSelector((state) => {
-    return { ...state };
-  });
+  const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    if (user && user.token) history.push("/");
-  }, [user, history]); // user as dependency
+    let intended = history.location.state;
+    console.log("INTENDED--------->", intended);
+    if (intended) {
+      return;
+    } else {
+      if (user && user.token) history.push("/");
+    }
+  }, [user, history]);
 
   let dispatch = useDispatch();
 
   const roleBasedRedirect = (res) => {
-    if (res.data.role === "admin") {
-      history.push("admin/dashboard");
+    // check if intended
+    let intended = history.location.state;
+    if (intended) {
+      history.push(intended.from);
     } else {
-      history.push("/user/history");
+      if (res.data.role === "admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/user/history");
+      }
     }
   };
 
   const handleSubmit = async (e) => {
-    //
-    e.preventDefault(); // preventing browser from reload
+    e.preventDefault();
     setLoading(true);
+    // console.table(email, password);
     try {
       const result = await auth.signInWithEmailAndPassword(email, password);
-      console.log(result);
+      // console.log(result);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
 
@@ -54,22 +64,17 @@ const Login = ({ history }) => {
           });
           roleBasedRedirect(res);
         })
-        .catch((error) => {
-          //
-          console.log(error);
-        });
+        .catch((err) => console.log(err));
 
-      //history.push("/");
+      // history.push("/");
     } catch (error) {
-      //
-
       console.log(error);
       toast.error(error.message);
       setLoading(false);
     }
   };
 
-  const googleLogin = async (e) => {
+  const googleLogin = async () => {
     auth
       .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
@@ -89,14 +94,12 @@ const Login = ({ history }) => {
             });
             roleBasedRedirect(res);
           })
-          .catch((error) => {
-            //
-            console.log(error);
-          });
+          .catch((err) => console.log(err));
         // history.push("/");
       })
-      .catch((error) => {
-        toast.error(error.message);
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
       });
   };
 
@@ -107,9 +110,8 @@ const Login = ({ history }) => {
           type="email"
           className="form-control"
           value={email}
-          placeholder="Your Email"
-          // onChange={(e) => console.log(e.target.value)} // for debugging
-          onChange={(e) => setEmail(e.target.value)} // change state
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Your email"
           autoFocus
         />
       </div>
@@ -119,9 +121,8 @@ const Login = ({ history }) => {
           type="password"
           className="form-control"
           value={password}
-          placeholder="Your Password"
-          // onChange={(e) => console.log(e.target.value)} // for debugging
-          onChange={(e) => setPassword(e.target.value)} // change state
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Your password"
         />
       </div>
 
@@ -136,18 +137,19 @@ const Login = ({ history }) => {
         size="large"
         disabled={!email || password.length < 6}
       >
-        Login with Email / Password
+        Login with Email/Password
       </Button>
     </form>
   );
+
   return (
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
           {loading ? (
-            <h4 className="text-danger">Loading ...</h4>
+            <h4 className="text-danger">Loading...</h4>
           ) : (
-            <h4> Login</h4>
+            <h4>Login</h4>
           )}
           {loginForm()}
 
@@ -159,12 +161,11 @@ const Login = ({ history }) => {
             shape="round"
             icon={<GoogleOutlined />}
             size="large"
-            //disabled={!email || password.length < 6}
           >
             Login with Google
           </Button>
 
-          <Link to="forgot/password" className="float-right text-danger">
+          <Link to="/forgot/password" className="float-right text-danger">
             Forgot Password
           </Link>
         </div>
