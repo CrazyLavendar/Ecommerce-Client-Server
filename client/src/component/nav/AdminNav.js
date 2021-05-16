@@ -8,46 +8,46 @@ const AdminNav = () => {
         <li className="nav-item">
           <Link to="/admin/dashboard" className="nav-link">
             {" "}
-            Dashboard
+            DASHBOARD
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/admin/product" className="nav-link">
             {" "}
-            Product Page
+            PRODUCT CREATE
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/admin/products" className="nav-link">
             {" "}
-            Products others
+            ALL PRODUCTS
           </Link>
         </li>
 
         <li className="nav-item">
           <Link to="/admin/category" className="nav-link">
             {" "}
-            Category
+            CATEGORY
           </Link>
         </li>
 
         <li className="nav-item">
           <Link to="/admin/sub" className="nav-link">
             {" "}
-            Sub Category
+            SUB CATEGORY
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/admin/coupon" className="nav-link">
             {" "}
-            Coupon
+            COUPON{" "}
           </Link>
         </li>
 
         <li className="nav-item">
           <Link to="/user/password" className="nav-link">
             {" "}
-            Password
+            PASSWORD
           </Link>
         </li>
       </ul>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AdminNav from "../../../component/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { createProduct } from "../../../functions/product";
+import { createProduct, updateProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../component/forms/ProductCreateForm";
 import FileUpload from "../../../component/forms/FileUpload";
 
@@ -10,23 +10,23 @@ import { getCategories, getCategorySubs } from "../../../functions/category";
 
 import { LoadingOutlined } from "@ant-design/icons";
 
-const initialState = {
-  title: "Macbook Pro",
-  description: "This is the best Apple product",
-  price: "45000",
-  categories: [],
-  category: "",
-  subs: [],
-  shipping: "Yes",
-  quantity: "50",
-  images: [],
-  colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
-  color: "White",
-  brand: "Apple",
-};
-
 const ProductCreate = () => {
+  const initialState = {
+    title: "Macbook Pro",
+    description: "This is the best Apple product",
+    price: "45000",
+    categories: [],
+    category: "",
+    subs: [],
+    shipping: "Yes",
+    quantity: "50",
+    images: [],
+    colors: ["Black", "Brown", "Silver", "White", "Blue"],
+    brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
+    color: "White",
+    brand: "Apple",
+  };
+
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);

@@ -83,7 +83,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
   };
 
   return (
-    <>
+    <div>
       <div className="row">
         {values.images &&
           values.images.map((image) => (
@@ -102,8 +102,9 @@ const FileUpload = ({ values, setValues, setLoading }) => {
             </Badge>
           ))}
       </div>
+      <br />
       <div className="row">
-        <label className="btn btn-primary">
+        <label className="btn btn-primary btn-raised mt-3">
           Choose File
           <input
             type="file"
@@ -114,7 +115,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           />
         </label>
       </div>
-    </>
+    </div>
   );
 };
 
